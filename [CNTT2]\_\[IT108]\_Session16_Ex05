@@ -1,0 +1,36 @@
+1. Phân tích: Vai trò của JSON Viewer khi gọi API
+
+• Vấn đề: Dữ liệu GPS thô trả về từ máy chủ gửi đến trình duyệt thường là một chuỗi văn bản dài, viết liền tù tì và không có xuống dòng (Minified JSON). Kỹ sư cực kỳ khó đọc để biết xe đang ở tọa độ nào.
+• Vai trò của JSON Viewer: Tiện ích này tự động bắt lấy chuỗi chữ thô đó, tự động xuống dòng, thụt lề, tô màu các trường dữ liệu (như hình minh họa) và cho phép đóng/mở các cụm dữ liệu. Giúp kỹ sư soi nhanh cấu trúc API để gỡ lỗi trong 1 giây.
+
+Phần 2. Triển khai: 5 Tiện ích thiết yếu & Cách cấu hình
+
+
+1. Danh sách 5 Extensions phải có (Chia theo 3 nhóm)
+
+• 📁 Nhóm Dev Suite (Hỗ trợ lập trình):
+	• JSONView / JSON Formatter: Tự động làm đẹp cấu trúc dữ liệu API thô.
+	• React Developer Tools / Vue Devtools: Soi trạng thái và component của giao diện web.
+• 📁 Nhóm Productivity Suite (Tăng hiệu suất):
+	• ColorZilla: Chấm và lấy nhanh mã màu của bất kỳ vị trí nào trên bản đồ điều phối.
+	• Wappalyzer: Nhìn thấu trang web đang dùng công nghệ, ngôn ngữ hay thư viện gì.
+• 📁 Nhóm Security Suite (Bảo mật):
+	• uBlock Origin: Chặn quảng cáo độc hại và mã theo dõi ẩn để tối ưu tốc độ tải trang.
+
+2. Cách ghim lên Toolbar để thao tác nhanh
+
+• Bấm vào biểu tượng Mảnh ghép (Extensions) ở góc trên bên phải trình duyệt → Tìm tên tiện ích → Bấm vào nút Ghim (Pin) để nó hiện thẳng ra thanh công cụ.
+
+3. Ràng buộc: Phân quyền Site Access (On click)
+
+Để các extension không tự ý đọc trộm dữ liệu nhạy cảm (như mật khẩu, ví điện tử), hãy giới hạn quyền:
+• Click chuột phải vào icon của Extension trên thanh công cụ → Chọn This can read and change site data → Tích chọn When you click the extension (On click). Tiện ích sẽ chỉ chạy khi nào bạn cho phép.
+
+Phần 3. Kiểm thử: Cách xử lý khi trình duyệt bị lag, tốn RAM
+
+Nếu trình duyệt bị chậm khi nạp biểu đồ tải trang (Waterfall), hãy kiểm tra xem extension nào đang "ngốn" tài nguyên bằng hệ thống quản lý có sẵn:
+• Cách 1: Truy cập trang quản lý nhanh
+	• Gõ địa chỉ chrome://extensions (hoặc edge://extensions) vào thanh URL rồi nhấn Enter. Nhìn lướt qua xem có tiện ích nào lạ, không dùng đến thì gạt công tắc Tắt (Disable) hoặc xóa hẳn đi.
+• Cách 2: Dùng Task Manager của trình duyệt (Chính xác nhất)
+	• Nhấn tổ hợp phím Shift + Esc trên bàn phím.
+	• Một bảng quản trị tác vụ sẽ hiện ra. Bạn sắp xếp theo cột Memory footprint (Bộ nhớ) để tìm đích danh Extension nào đang chiếm nhiều RAM nhất và bấm End Process (Kết thúc tiến trình) để giải phóng RAM ngay lập tức.
