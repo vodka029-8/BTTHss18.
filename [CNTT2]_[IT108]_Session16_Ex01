@@ -1,0 +1,28 @@
+
+1. Giải thích tiến trình DNS (Dễ hiểu)
+
+DNS giống như "cuốn danh bạ điện thoại" của Internet:
+• Tên miền (greenlog.vn) giống như Tên người trong danh bạ.
+• Địa chỉ IP (103.x.x.x) giống như Số điện thoại để máy tính gọi điện cho nhau.
+Khi Nam gõ tên miền, máy tính sẽ lật cuốn danh bạ này ra để tìm "số điện thoại" (IP) của máy chủ công ty rồi mới kết nối đến.
+
+2. Chẩn đoán lỗi: Tại sao Nam sai?
+
+• Lỗi NXDOMAIN (Lỗi Nam đang gặp): Nghĩa là "Không tìm thấy tên này trong danh bạ".
+	• Do Nam gõ thiếu chữ "e" (grenlog.vn thay vì greenlog.vn).
+	• Trình duyệt tìm không thấy tên nên dừng lại luôn, chưa hề chạm tới máy chủ công ty. Vì vậy, Nam bảo máy chủ sập nguồn là sai.
+• Lỗi 500 (Internal Server Error): Là máy chủ có hoạt động, Nam đã bấm gọi được nhưng tổng đài bên trong máy chủ bị chập mạch, không trả lời được.
+
+3. Quy trình kiểm tra bằng nút F12
+
+Để biết máy tính đã tìm đến máy chủ chưa, Nam làm như sau:
+1. Bấm nút F12 trên bàn phím -> Chọn tab Network (Mạng).
+2. Bấm F5 để tải lại trang web.
+3. Nhìn vào cột Status (Trạng thái):
+	• Nếu hiện Failed / ERR_NAME_NOT_RESOLVED: Do gõ sai tên miền (Lỗi tại Nam).
+	• Nếu hiện mã số 500, 404, 200: Đã tìm thấy máy chủ thành công (Lỗi hoặc phản hồi từ máy chủ).
+
+4. Nếu sửa đúng tên miền mà bị lỗi 404 Not Found?
+
+• Ý nghĩa: Máy tính của Nam đã tìm thấy máy chủ công ty thành công.
+• Nguyên nhân: Máy chủ báo lại là "Không tìm thấy trang web này". Có thể do Nam gõ sai đường dẫn phía sau (ví dụ: /trang-chu gõ thành /trangchu), hoặc phía IT công ty chưa cấu hình/đăng tải trang quản trị này lên máy chủ.
