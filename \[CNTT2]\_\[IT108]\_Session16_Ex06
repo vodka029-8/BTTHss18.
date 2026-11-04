@@ -1,0 +1,23 @@
+Phần 1. Phân tích: Xác định "nút thắt cổ chai" (Bottleneck)
+
+Dựa trên biểu đồ Waterfall (Thác nước) trong tab Network khi bật Disable Cache, trang web bị chậm (20 giây) do 2 nút thắt cổ chai chính:
+1. Các tệp hình ảnh (Bản đồ) quá nặng: Nhìn vào biểu đồ, các thanh kéo dài nhất (thời gian nạp lâu nhất) thuộc về các file ảnh .png hoặc .jpg. Dung lượng ảnh gốc quá lớn khiến trình duyệt mất nhiều thời gian để tải về xong mới vẽ được lên màn hình.
+2. Lỗi đứt đường dẫn (404 Not Found): Các yêu cầu bị tô đỏ với mã lỗi 404 bắt trình duyệt phải tốn thời gian chờ đợi phản hồi không có thực, làm gián đoạn luồng nạp và hiển thị của tài nguyên khác.
+
+Phần 2. Triển khai: Quy trình 3 bước tối ưu tốc độ trang web
+
+Để đưa trang web về tốc độ tải lý tưởng, bạn áp dụng quy trình sau:
+• Bước 1: Sửa lỗi đứt link (Mã 404)
+	• Kiểm tra lại code giao diện để cập nhật đúng đường dẫn của các file hình ảnh, CSS hoặc JS đang bị báo đỏ. Nếu file không còn sử dụng, hãy xóa bỏ hoàn toàn dòng gọi tệp đó để loại bỏ yêu cầu thừa.
+• Bước 2: Nén và tối ưu tài nguyên hình ảnh
+	• Nén giảm dung lượng các file ảnh bản đồ nhưng vẫn giữ nguyên độ nét vừa đủ.
+	• Chuyển đổi định dạng ảnh từ .png/.jpg sang các định dạng thế hệ mới nhẹ hơn như .webp hoặc .avif để giảm dung lượng file xuống gấp nhiều lần.
+• Bước 3: Bật cơ chế Browser Cache (Bộ nhớ đệm trình duyệt)
+	• Cấu hình trên máy chủ (Server) để gửi kèm tiêu đề Cache-Control cho các tài nguyên tĩnh (ảnh, CSS, JS).
+	• Khi shipper truy cập từ lần thứ 2, trình duyệt sẽ tự động lấy các file này từ bộ nhớ máy tính ra dùng luôn thay vì phải tải lại từ Internet.
+
+Phần 3. Kiểm thử: Ý nghĩa của mã trạng thái 304 Not Modified
+
+Khi bạn bấm reload (tải lại) trang và thấy các file tĩnh trả về mã 304 Not Modified, đây là một tín hiệu cực kỳ tốt cho hệ thống vì:
+• Bản chất: Trình duyệt hỏi máy chủ: "Tôi có file ảnh bản đồ cũ lưu trong cache rồi, trên máy chủ có bản nào mới hơn không?". Máy chủ trả về mã 304 để báo: "File không có thay đổi gì đâu, hãy dùng tiếp file trong cache đi!".
+• Tiết kiệm băng thông: Máy chủ không cần phải gửi lại toàn bộ file ảnh nặng nề đó qua mạng nữa. Nó chỉ gửi một tín hiệu text siêu nhẹ, giúp tiết kiệm tối đa băng thông đường truyền và giúp trang web hiển thị ngay lập tức.
