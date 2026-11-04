@@ -1,0 +1,36 @@
+Phần 1. Phân tích: Ẩn danh (Incognito) vs Hồ sơ riêng (Dedicated Profile)
+
+Để quản lý nhiều tài khoản mà không bị đá nhau, chúng ta so sánh hai cách làm sau:
+
+Tiêu chí	Chế độ ẩn danh (Incognito Mode)	Hồ sơ riêng (Dedicated Profile)
+Nơi lưu trữ	Tạm thời trên RAM.	Lâu dài trên ổ cứng (HDD/SSD).
+Khi tắt cửa sổ	Xóa sạch sành sanh mọi Cookie, lịch sử, phiên đăng nhập.	Giữ nguyên. Lần sau mở lên không cần đăng nhập lại.
+Mục đích	Duyệt web nhanh không lưu vết, test nhanh 1 tài khoản phụ.	Cách ly hoàn toàn 3 môi trường (Cá nhân, Công việc, Sandbox).
+
+• Đáp ứng ràng buộc: Dùng Dedicated Profile sẽ giúp tách biệt 100% mật khẩu, lịch sử của tài khoản Cá nhân, không bao giờ lo bị lộ khi đang share màn hình làm việc.
+
+Phần 2. Triển khai: Thiết lập 3 Profile & Đồng bộ Cloud Sync
+
+
+1. Quy trình tạo 3 Profile độc lập (Chrome/Edge)
+
+• Bước 1: Bấm vào Ảnh đại diện (Avatar Profile) ở góc trên cùng bên phải trình duyệt.
+• Bước 2: Chọn Add (Thêm) ở mục Other Profiles.
+• Bước 3: Tạo lần lượt 3 Profile đặt tên là: Personal, Work (GreenLog), và Sandbox. Bạn có thể đổi màu giao diện riêng cho từng cái để đỡ bấm nhầm.
+
+2. Đồng bộ hóa Cloud Sync (Bảo vệ Bookmark khi đổi máy)
+
+• Trong từng Profile, bấm vào Avatar → Chọn Turn on sync... (Bật tính năng đồng bộ).
+• Đăng nhập bằng 3 Email khác nhau cho 3 Profile này. Toàn bộ Bookmark (GitHub, Canvas LMS, Portal), mật khẩu sẽ tự động lưu lên đám mây, đổi sang máy tính khác chỉ cần đăng nhập lại email là xong.
+
+3. Cấu trúc cây thư mục Bookmark gợi ý (Profile Work)
+
+• 📁 GreenLog_Work
+	• 📂 Học tập: Canvas LMS, Portal công ty.
+	• 📂 Công cụ: GitHub (link repo [Tên Lớp]_[Môn Học]_Session16_Ex04), F12 DevTools.
+
+Phần 3. Kiểm thử: Quy tắc dùng Guest Profile (Hồ sơ khách) ở máy công cộng
+
+Khi bắt buộc phải ngồi máy tính ở tiệm net hoặc máy chung của công ty, hãy bật Guest Profile (Hồ sơ khách) vì các lý do bảo mật sau:
+• Quy tắc hoạt động: Trình duyệt Khách hoàn toàn "sạch sẽ", không dùng chung dữ liệu với bất kỳ ai trên máy đó.
+• Khi bạn tắt cửa sổ Khách: Toàn bộ lịch sử duyệt web, cookie đăng nhập, mật khẩu bạn vừa gõ vào sẽ bị xóa bỏ ngay lập tức. Người ngồi sau bật máy lên sẽ không thể mò lại tài khoản GreenLog hay GitHub của bạn.
