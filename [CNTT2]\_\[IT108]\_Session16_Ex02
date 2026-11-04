@@ -1,0 +1,23 @@
+1. Phân tích: Giỏ hàng bị mất là do đâu?
+
+• Lỗi hệ thống: Đang dùng Session Cookie (Cookie tạm thời). Khi shipper tắt trình duyệt hoặc tải lại trang, cookie này tự xóa \(\rightarrow \) Mất giỏ hàng, bắt đăng nhập lại.
+• Giải pháp: Chuyển sang Persistent Cookie (Cookie vĩnh cửu). Nó có ngày hết hạn rõ ràng nên sẽ ở lại trong máy shipper, giúp giữ giỏ hàng và duy trì đăng nhập.
+
+So sánh Cookies và Cache cho dễ hình dung:
+
+• Cookies (~4KB - Siêu nhỏ): Giống như Thẻ căn cước. Chỉ dùng để nhận diện: "Tôi là shipper Nam".
+• Cache (Hàng MB/GB - Rất lớn): Giống như Kho chứa đồ. Dùng để lưu ảnh, giao diện web cho những lần sau tải trang nhanh hơn.
+
+2. Triển khai: Cấu trúc Cookie bảo mật (Chống hack)
+
+Để bảo mật, mẩu tin Cookie lưu Token gửi từ Server về máy shipper cần cài thêm các "chốt khóa" sau:
+• Token: Mã định danh của shipper.
+• Max-Age (Thời gian sống): Cài đặt ví dụ 30 ngày để shipper không bị thoát tài khoản liên tục.
+• HttpOnly (Khóa JavaScript): Quan trọng nhất. Chốt khóa này cấm mã JavaScript sờ vào Cookie. Hacker không thể dùng lệnh để ăn trộm tài khoản của shipper được.
+• Secure (Khóa HTTPS): Chỉ cho phép gửi cookie qua mạng an toàn (HTTPS), ra quán cafe dùng Wifi công cộng không sợ bị nghe lén.
+
+3. Kiểm thử: Cách sửa lỗi đổi giao diện nhưng không hiện màu mới
+
+• Lý do: Do trình duyệt của shipper bị "bảo thủ", vẫn lấy giao diện cũ lưu trong Cache ra dùng.
+• Cách xử lý (Hard Reload - Làm mới ép buộc để xóa cache):
+	• Máy Windows: Nhấn tổ hợp phím Ctrl + F5.
