@@ -1,0 +1,35 @@
+
+Phân tích: Box Model bị lỗi là gì?
+
+Khi bạn bấm F12 \(\rightarrow \) chọn tab Computed, bạn sẽ thấy mô hình CSS Box Model gồm 4 lớp từ trong ra ngoài như một "hộp quà":
+1. Content (Ruột): Nội dung hiển thị (chữ, ảnh).
+2. Padding (Đệm): Khoảng cách từ nội dung đến phần viền.
+3. Border (Viền): Đường viền bao quanh.
+4. Margin (Lề): Khoảng cách từ viền ra các phần tử xung quanh.
+• Lý do bị vỡ/đè giao diện: Do khung "Thông tin tài xế" đang có Margin bằng 0 hoặc dùng thuộc tính định vị sai (position: absolute), khiến nó không đẩy khung "Danh sách trạm" ra mà đè thẳng lên nhau.
+
+Phần 2. Triển khai: Sửa lỗi trực tiếp bằng F12 (Styles)
+
+Để sửa lỗi tạm thời mà không chạm vào code gốc (theo đúng ràng buộc), bạn làm như sau:
+1. Dùng chuột click vào biểu tượng Mũi tên (Inspect Element) ở góc trên cùng bên trái của F12.
+2. Click thẳng vào khung "Thông tin tài xế" bị lỗi để tìm đúng thẻ HTML của nó trong cây DOM.
+3. Sang tab Styles bên cạnh, tìm đến phần tử đó và thêm/sửa đoạn CSS sau:
+css
+/* Cách 1: Dùng Margin để đẩy hai khung ra xa nhau */
+.khung-thong-tin-tai-xe {
+    margin-bottom: 20px; /* Tạo khoảng cách dưới 20px để đẩy khung trạm xuống */
+}
+
+/* Cách 2: Nếu đang bị dính thuộc tính định vị sai */
+.khung-thong-tin-tai-xe {
+    position: relative; /* Đưa về trạng thái xếp hàng tự nhiên, không cho đè lên nhau */
+    top: 0;
+}
+Hãy thận trọng khi sử dụng mã.
+
+Phần 3. Kiểm thử: Tại sao đổi Margin nhưng phần tử không nhúc nhích?
+
+Nếu bạn đã tăng margin trong tab Styles nhưng giao diện vẫn trơ ra, hãy kiểm tra 2 nguyên nhân bị ghi đè sau:
+• Bị thuộc tính khác mạnh hơn đè lên: Nhìn trong tab Styles, nếu thấy dòng chữ margin của bạn bị một đường gạch ngang, nghĩa là có một đoạn code khác ưu tiên hơn đang ăn dòng đó (ví dụ: code có gắn chữ !important).
+• Do thuộc tính display: Phần tử đó có thể đang là dòng (display: inline). Quy tắc của trình duyệt: Thẻ inline thì không ăn thuộc tính margin-top và margin-bottom.
+	• Cách sửa nhanh ở F12: Thêm dòng display: block; hoặc display: inline-block; vào phần tử đó.
